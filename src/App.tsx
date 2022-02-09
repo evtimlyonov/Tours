@@ -1,4 +1,7 @@
-const tours = [
+import { useState } from 'react';
+import { Tour } from './components/Tour';
+
+const data = [
   {
     id: 1,
     img: 'https://dl.airtable.com/.attachments/a0cd0702c443f31526267f38ea5314a1/2447eb7a/paris.jpg',
@@ -23,37 +26,41 @@ const tours = [
 ];
 
 function App() {
+  const [tours, setTours] = useState(data);
+  const deleteHandler = (id: number) => {
+    setTours((prevState) => prevState.filter((t) => t.id !== id));
+  };
+
+  const refreshHandler = () => {
+    setTours(data);
+  };
   return (
     <main className='w-[90vh] max-w-[620px] mx-auto my-20'>
       <section>
         <div className='mb-16 text-center'>
-          <h2 className='text-4xl tracking-widest font-bold mb-3'>Our Tours</h2>
+          <h2 className='text-4xl tracking-widest font-bold mb-3'>
+            {!tours.length ? 'No Tours Left' : 'Our Tours'}
+          </h2>
           <div className='w-[6rem] h-[0.25rem] bg-[#49a6e9] m-auto'></div>
+          {!tours.length && (
+            <button
+              className='mt-10 bg-[#49a6e9] py-2 px-8 rounded-xl text-xl text-white'
+              onClick={refreshHandler}>
+              refresh
+            </button>
+          )}
         </div>
         <div>
           {tours.map((tour) => (
-            <article className='transition ease-in-out delay-150  bg-white rounded overflow-hidden my-8 mx-0 shadow-2xl'>
-              <img
-                className='h-80 w-full object-cover'
-                src={tour.img}
-                alt='Best of Paris in 7 Days Tour'
-              />
-              <footer className='py-6 px-8'>
-                <div className='flex justify-between items-center mb-6'>
-                  <h4 className='font-bold tracking-wider'>{tour.name}</h4>
-                  <h4 className='text-[#49a6e9] bg-[#ebf7ff] font-bold tracking-wider py-1 px-2 rounded'>
-                    ${tour.price}
-                  </h4>
-                </div>
-                <p className='mb-5 text-[#617d98]'>
-                  {tour.text}
-                  <button className='text-[#49a6e9]'> Read More</button>
-                </p>
-                <button className='text-[#bb2525] w-[200px] border border-[#bb2525] rounded py-1 px-2 mt-4 mx-auto block'>
-                  not interested
-                </button>
-              </footer>
-            </article>
+            <Tour
+              key={tour.id}
+              id={tour.id}
+              img={tour.img}
+              name={tour.name}
+              price={tour.price}
+              text={tour.text}
+              deleteHandler={deleteHandler}
+            />
           ))}
         </div>
       </section>
