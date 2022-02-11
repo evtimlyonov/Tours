@@ -18,14 +18,14 @@ export const Tour = ({ id, img, name, price, text, deleteHandler }: Tours) => {
   };
 
   return (
-    <article className='transition ease-in-out delay-150  bg-white rounded overflow-hidden my-8 mx-0 shadow-2xl'>
+    <article className='mx-0 my-8 overflow-hidden bg-white rounded shadow-2xl'>
       <img
-        className='h-80 w-full object-cover'
+        className='object-cover w-full h-80'
         src={img}
         alt='Best of Paris in 7 Days Tour'
       />
-      <footer className='py-6 px-8'>
-        <div className='flex justify-between items-center mb-6'>
+      <footer className='px-8 py-6'>
+        <div className='flex items-center justify-between mb-6'>
           <h4 className='font-bold tracking-wider'>{name}</h4>
           <h4 className='text-[#49a6e9] bg-[#ebf7ff] font-bold tracking-wider py-1 px-2 rounded'>
             ${price}
